@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_front/models/user_model.dart';
 import 'package:flutter_front/provider/user_provider.dart';
 import 'package:flutter_front/screens/adduser.dart';
+import 'package:flutter_front/screens/update_user.dart';
 import 'package:provider/provider.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -48,7 +49,6 @@ class HomeScreen extends StatelessWidget {
                 itemBuilder: (context, index) {
                   User user = provider.getAllUsers[index];
                   return ListTile(
-                    
                     hoverColor: Colors.black54,
                     style: ListTileStyle.list,
                     leading: const Icon(
@@ -70,6 +70,25 @@ class HomeScreen extends StatelessWidget {
                           fontWeight: FontWeight.w500,
                           color: Colors.black87),
                     ),
+                    trailing: IconButton(
+                      icon: const Icon(
+                        Icons.delete,
+                        size: 30,
+                        color: Colors.grey,
+                      ),
+                      onPressed: () async {
+                        provider.deleteUsers(user.id);
+                      },
+                    ),
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => UpdateUser(
+                              user: user,
+                            ),
+                          ));
+                    },
                   );
                 },
               );

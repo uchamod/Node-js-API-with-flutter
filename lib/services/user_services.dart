@@ -45,6 +45,42 @@ class UserServices {
       rethrow;
     }
   }
+
   //update user
+  Future<void> updateUser(User user) async {
+    try {
+      final response = await http.put(
+          Uri.parse("${baseUrl}updateUser/${user.id}"),
+          headers: <String, String>{
+            'Content-Type': 'application/json; charset=UTF-8'
+          },
+          body: json.encode(user.toJson()));
+      if (response.statusCode == 200) {
+        print('update user succsussfuly: ${response.statusCode}');
+      } else {
+        print('Failed to update user: ${response.statusCode}');
+        throw Exception('Failed to upadate user');
+      }
+    } catch (err) {
+      print('Error updating user: $err');
+      rethrow;
+    }
+  }
+
   //delete user
+  Future<void> deleteUser(String userId) async {
+    try {
+      final response =
+          await http.delete(Uri.parse("${baseUrl}deleteUser/$userId"));
+      if (response.statusCode == 200) {
+        print('delete user succsussfuly: ${response.statusCode}');
+      } else {
+        print('Failed to create user: ${response.statusCode}');
+        throw Exception('Failed to create user');
+      }
+    } catch (err) {
+      print('Error creating user: $err');
+      rethrow;
+    }
+  }
 }
